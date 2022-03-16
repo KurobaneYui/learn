@@ -1,0 +1,196 @@
+" global options
+set nocompatible hidden number nowrap ruler
+set lazyredraw ttyfast wildmenu
+set ignorecase smartcase incsearch hlsearch
+set expandtab smarttab tabstop=4 softtabstop=4
+set shiftwidth=4 shiftround
+"set textwidth=80 cc=+1
+set smartindent autochdir
+"set autoindent list mousehide
+set matchpairs+=<:>
+set tags=tags;
+set completeopt-=preview
+set updatetime=300
+set shortmess+=c
+
+"" 设置tab和空格样式
+"set list listchars=nbsp:%,tab:\|\ ,extends:»,precedes:«,trail:-
+
+ " Lines folding
+set foldenable foldmethod=marker foldnestmax=1 " foldlevelstart=1
+
+"Set backspace
+set backspace=start,indent
+
+"Set loaded file encodings
+set fileencodings=ucs-bom,utf-8,enc-cn,cp936,default,latin1
+
+if has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+filetype plugin indent on
+
+
+call plug#begin('~/.vim_plugged')
+    " color theme
+    Plug 'NLKNguyen/papercolor-theme'
+    Plug 'tlhr/anderson.vim'
+    Plug 'morhetz/gruvbox'
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'joshdick/onedark.vim'
+    Plug 'rakr/vim-one'
+
+    "Plug 'jlanzarotta/bufexplorer'
+    Plug 'vim-scripts/matchit.zip'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'tpope/vim-surround'
+    "Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'itchyny/lightline.vim'
+    Plug 'tpope/vim-repeat'
+    Plug 'majutsushi/tagbar'
+    Plug 'mbbill/fencview'
+    Plug 'tpope/vim-abolish'
+
+    Plug 'posva/vim-vue' , { 'for': 'vue' }
+    Plug 'chr4/nginx.vim', { 'for': 'nginx' }
+    "Plug 'fatih/vim-go', { 'for': 'go' }
+    Plug 'cespare/vim-toml', { 'for': 'toml' }
+    Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+
+set background=dark
+colorscheme PaperColor
+"colorscheme gruvbox
+syntax enable
+
+if &term =~ "xterm-256color" || &term =~ "screen-256color" || &term =~ "screen"
+    " enable 256-color mode
+    let &t_Co=256
+    let &t_AF="\e[38;5;%dm"
+    let &t_AB="\e[48;5;%dm"
+    hi Normal ctermbg=none
+endif
+
+"set default guifont
+if has("win32") || has("win64")
+	set dir=$HOME\\.undodir
+	set gfn=Inconsolata:h15,Consolas:h14,Lucida_Console:h15,Terminal:h15
+	set helplang=cn columns=95 lines=10
+    set guioptions=mr
+	"au GUIEnter * simalt ~x
+	if version >= 703
+		set undofile undodir=$HOME\\.undodir
+	endif
+elseif has ("unix")
+    if !isdirectory($HOME . "/.undodir")
+        call mkdir($HOME . "/.undodir", "p")
+    endif
+	set dir=$HOME/.undodir
+    set guioptions=mr
+	set guifont=Meslo\ LG\ M\ DZ\ 16,DejaVu\ Sans\ Mono\ 16
+	if version >= 703
+		set undofile undodir=$HOME/.undodir
+	endif
+endif
+
+"Set mapleader
+let mapleader = ","
+let g:mapleader = ","
+
+"Set paste mode toggle key
+set pastetoggle=<leader>p
+
+nnoremap ' `
+nnoremap ` '
+nnoremap ,yw yiww
+nnoremap ,ow "_diwhp
+
+noremap <leader>fe :set fileencoding=utf-8
+noremap <leader>s :set wrap!<CR>
+noremap <leader>n :set number!<CR>
+noremap <leader>ac :set autochdir!<CR>
+nnoremap <leader>t :TagbarToggle<CR>
+nnoremap <leader>z :b#<CR>
+noremap <leader>/ :nohlsearch<CR>
+nmap <leader>be :CocList buffers<CR>
+nmap <leader><leader>m :CocList mru<CR>
+nmap <leader><leader>x :%s/\s\+$//g<CR>
+cnoremap <C-A> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-K> <C-U>
+nmap <c-x><c-x> :q<CR>
+nnoremap j gj
+nnoremap k gk
+" vnoremap < <gv
+" vnoremap > >gv
+
+" insert date 
+iab xdate <c-r>=strftime("%Y.%m.%d")<cr>
+
+" When editing a file, always jump to the last known cursor position. 
+autocmd BufReadPost * 
+    \ if line("'\"") > 0 && line("'\"") <= line("$") | 
+    \   exe "normal g`\"" | 
+    \ endif 
+
+let g:lightline = {'colorscheme': 'wombat'}
+let g:autofmt_autosave = 1
+
+
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-j> <Plug>(coc-snippets-select)
