@@ -2,8 +2,9 @@
 
 ## color schema
 
-在用户根目录下创建.vim文件夹，然后在里面建立color文件夹，里面存放配色文件。
+在用户根目录下创建.vim文件夹，然后在里面建立colors文件夹，里面存放配色文件。
 推荐使用配色molokai，可以直接使用别人的配置：https://github.com/tomasr/molokai.git
+克隆仓库后把colors里的文件放到.vim目录下的colors目录下即可
 
 ## 插件
 
