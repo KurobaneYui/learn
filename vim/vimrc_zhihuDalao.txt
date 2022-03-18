@@ -33,34 +33,54 @@ endif
 
 filetype plugin indent on
 
-
-call plug#begin('~/.vim_plugged')
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin('~/.vim/vim_plugged')
+    " 让Vundle管理插件，必须
+    Plugin 'VundleVim/Vundle.vim'
+    
+    " 以下范例用来支持不同格式的插件
+    " Github上的插件
+    " 格式为Plugin '用户名/插件仓库名'
+    "
+    " 来自http:vim-scripts.org/vim/scripts.html的插件
+    " Plugin 'vim-scripts/插件仓库名' 或 Plugin '插件名称'
+    "
+    " 由Git支持但不再github上的插件仓库 Plugin 'git clone 后面的地址'
+    "
+    " 本地git仓库 Plugin 'file:///+本地仓库绝对路径'
+    "
+    " 如果插件位于仓库某个子目录，比如仓库sparkup仓库的vim目录下
+    " Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+    "
+    " 如果安装插件的名称有冲突，可以重命名将要安装的插件
+    " Plugin 'ascenator/L9', {'name': 'newL9'}
+    
     " color theme
-    Plug 'NLKNguyen/papercolor-theme'
-    Plug 'tlhr/anderson.vim'
-    Plug 'morhetz/gruvbox'
-    Plug 'nanotech/jellybeans.vim'
-    Plug 'joshdick/onedark.vim'
-    Plug 'rakr/vim-one'
+    Plugin 'NLKNguyen/papercolor-theme'
+    Plugin 'tlhr/anderson.vim'
+    Plugin 'morhetz/gruvbox'
+    Plugin 'nanotech/jellybeans.vim'
+    Plugin 'joshdick/onedark.vim'
+    Plugin 'rakr/vim-one'
 
-    "Plug 'jlanzarotta/bufexplorer'
-    Plug 'vim-scripts/matchit.zip'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'tpope/vim-surround'
-    "Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'itchyny/lightline.vim'
-    Plug 'tpope/vim-repeat'
-    Plug 'majutsushi/tagbar'
-    Plug 'mbbill/fencview'
-    Plug 'tpope/vim-abolish'
+    "Plugin 'jlanzarotta/bufexplorer'
+    Plugin 'vim-scripts/matchit.zip'
+    Plugin 'scrooloose/nerdcommenter'
+    Plugin 'tpope/vim-surround'
+    "Plugin 'ctrlpvim/ctrlp.vim'
+    Plugin 'itchyny/lightline.vim'
+    Plugin 'tpope/vim-repeat'
+    Plugin 'majutsushi/tagbar'
+    Plugin 'mbbill/fencview'
+    Plugin 'tpope/vim-abolish'
 
-    Plug 'posva/vim-vue' , { 'for': 'vue' }
-    Plug 'chr4/nginx.vim', { 'for': 'nginx' }
-    "Plug 'fatih/vim-go', { 'for': 'go' }
-    Plug 'cespare/vim-toml', { 'for': 'toml' }
-    Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-call plug#end()
+    Plugin 'posva/vim-vue' , { 'for': 'vue' }
+    Plugin 'chr4/nginx.vim', { 'for': 'nginx' }
+    "Plugin 'fatih/vim-go', { 'for': 'go' }
+    Plugin 'cespare/vim-toml', { 'for': 'toml' }
+    Plugin 'rust-lang/rust.vim', { 'for': 'rust' }
+    Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+call vundle#end()
 
 
 set background=dark
